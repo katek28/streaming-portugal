@@ -1,9 +1,10 @@
 import pandas as pd
 import time
 
-def data_stream(df, batch_size=10, delay=1):
-
-    for start in range(0, len(df), batch_size):
-        end = start + batch_size
-        yield df.iloc[start:end]
+def stream_data(file_path, delay=1, chunk_size=10):
+   
+    df = pd.read_csv(file_path)
+    for i in range(0, len(df), chunk_size):
+        chunk = df.iloc[i:i + chunk_size]
+        yield chunk
         time.sleep(delay)

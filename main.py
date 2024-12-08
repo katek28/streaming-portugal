@@ -20,17 +20,17 @@ df['LivingArea'] = pd.to_numeric(df['LivingArea'], errors='coerce')
 # Удаляем строки с пропущенными значениями
 df = df.dropna(subset=['Price', 'LivingArea'])
 
-# Основной цикл обработки потока данных
+# Обработка потока данных
 def process_stream():
     aggregated_data = pd.DataFrame()
 
-    for batch in data_stream(df, batch_size=10, delay=1):  # 10 записей в секунду
-        filtered_batch = filter_data(batch)
-        aggregated_batch = aggregate_data(filtered_batch)
-        aggregated_data = pd.concat([aggregated_data, aggregated_batch])
+    for batch in data_stream(df, chunk_size=10, delay=1):  # 10 записей в секунду
+        filtered_chunk = filter_data(chunk)
+        aggregated_chunk = aggregate_data(filtered_chunk)
+        aggregated_data = pd.concat([aggregated_data, aggregated_chunk])
 
         # Вывод промежуточного результата
-        print(aggregated_batch)
+        print(aggregated_chunk)
 
         # Сохраняем результат в CSV
         save_to_csv(aggregated_data, OUTPUT_PATH)

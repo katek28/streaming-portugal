@@ -1,20 +1,21 @@
-def filter_data(batch):
+import pandas as pd
+
+def filter_data(df):
     """
-    Фильтрует данные: оставляет только объявления с ценой >= 50,000
-    и площадью >= 20 м².
+    Фильтрует данные: удаляет записи с ценой < 50000 и площадью < 20 м².
 
     """
-    return batch[(batch['Price'] >= 50000) & (batch['LivingArea'] >= 20)]
+    return df[(df['Price'] >= 50000) & (df['LivingArea'] >= 20)]
 
-def aggregate_data(batch):
+def aggregate_data(df):
     """
-    Агрегирует данные по типу недвижимости и району.
+    Агрегирует данные по типу и району недвижимости.
 
     """
-    grouped = batch.groupby(['Type', 'District']).agg(
+    grouped = df.groupby(['Type', 'District']).agg(
         avg_price=('Price', 'mean'),
         avg_area=('LivingArea', 'mean'),
         total_listings=('Price', 'count'),
-        avg_price_per_m2=('Price', lambda x: (x / batch.loc[x.index, 'LivingArea']).mean())
+        avg_price_per_m2=('Price', lambda x: x.mean() / df['LivingArea'].mean())
     ).reset_index()
     return grouped
