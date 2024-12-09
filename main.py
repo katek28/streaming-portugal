@@ -1,12 +1,13 @@
-from pathlib import Path
 import pandas as pd
+import time
+import subprocess
+import threading
+from pathlib import Path
 from data_stream import data_stream
 from data_processing import filter_data, aggregate_data
 from utils import save_to_csv
-import time
 
 # Базовый путь
-#BASE_DIR = Path(__file__).resolve().parent
 DATA_PATH = 'D:/streaming-portugal/data/portugal_listings.csv'
 OUTPUT_PATH = 'D:/streaming-portugal/data/aggregated_data.csv'
 
@@ -24,7 +25,7 @@ df = df.dropna(subset=['Price', 'LivingArea'])
 def process_stream():
     aggregated_data = pd.DataFrame()
 
-    for chunk in data_stream(df, chunk_size=10, delay=1):  # 10 записей в секунду
+    for chunk in data_stream(df, chunk_size=10, delay=1): 
         filtered_chunk = filter_data(chunk)
         aggregated_chunk = aggregate_data(filtered_chunk)
         aggregated_data = pd.concat([aggregated_data, aggregated_chunk])
@@ -35,8 +36,18 @@ def process_stream():
         # Сохранение результата в CSV
         save_to_csv(aggregated_data, OUTPUT_PATH)
 
-        time.sleep(30)  # Обновление каждые 30 секунд
+        time.sleep(30)  
+
+# Функция для запуска визуализации Streamlit в отдельном процессе
+def run_visualization():
+    subprocess.run(["streamlit", "run", "visualization.py"])
 
 # Запуск
 if __name__ == "__main__":
+    
+    visual_thread = threading.Thread(target=run_visualization)
+    visual_thread.daemon = True  
+    visual_thread.start()
+
+    # Запуск обработки данных
     process_stream()

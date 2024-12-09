@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import time
 
-DATA_PATH = "data/aggregated_results.csv"
+DATA_PATH = "D:/streaming-portugal/data/aggregated_data.csv"
 
 @st.cache_data
 def load_data(path):
