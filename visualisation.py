@@ -26,8 +26,9 @@ while True:
             st.subheader("Средняя площадь по районам")
             st.bar_chart(data.groupby("District")['avg_area'].mean())
 
+        st.autorefresh(interval=30)
         time.sleep(30)
-        st.experimental_rerun()
+        
     except FileNotFoundError:
         st.error("Файл с данными пока не создан.")
         time.sleep(5)
