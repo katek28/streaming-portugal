@@ -5,7 +5,7 @@ from data_processing import filter_data, aggregate_data
 from utils import save_to_csv
 import time
 
-# Устанавливаем базовый путь
+# Базовый путь
 BASE_DIR = Path(__file__).resolve().parent
 DATA_PATH = BASE_DIR / 'data' / 'portugal_listings.csv'
 OUTPUT_PATH = BASE_DIR / 'data' / 'aggregated_results.csv'
@@ -17,7 +17,7 @@ df = pd.read_csv(DATA_PATH, low_memory=False)
 df['Price'] = pd.to_numeric(df['Price'], errors='coerce')
 df['LivingArea'] = pd.to_numeric(df['LivingArea'], errors='coerce')
 
-# Удаляем строки с пропущенными значениями
+# Удаление строки с пропущенными значениями
 df = df.dropna(subset=['Price', 'LivingArea'])
 
 # Обработка потока данных
@@ -32,7 +32,7 @@ def process_stream():
         # Вывод промежуточного результата
         print(aggregated_chunk)
 
-        # Сохраняем результат в CSV
+        # Сохранение результата в CSV
         save_to_csv(aggregated_data, OUTPUT_PATH)
 
         time.sleep(30)  # Обновление каждые 30 секунд
