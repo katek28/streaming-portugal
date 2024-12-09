@@ -39,13 +39,13 @@ def process_stream():
         time.sleep(30)  
 
 # Функция для запуска визуализации Streamlit в отдельном процессе
-def run_visualization():
-    subprocess.run(["streamlit", "run", "visualization.py"])
+def run_visualisation():
+    subprocess.run(["streamlit", "run", "visualisation.py"])
 
 # Запуск
 if __name__ == "__main__":
     
-    visual_thread = threading.Thread(target=run_visualization)
+    visual_thread = threading.Thread(target=run_visualisation)
     visual_thread.daemon = True  
     visual_thread.start()
 
