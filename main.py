@@ -6,9 +6,9 @@ from utils import save_to_csv
 import time
 
 # Базовый путь
-BASE_DIR = Path(__file__).resolve().parent
-DATA_PATH = BASE_DIR / 'data' / 'portugal_listings.csv'
-OUTPUT_PATH = BASE_DIR / 'data' / 'aggregated_results.csv'
+#BASE_DIR = Path(__file__).resolve().parent
+DATA_PATH = 'D:/streaming-portugal/data/portugal_listings.csv'
+OUTPUT_PATH = 'D:/streaming-portugal/data/aggregated_data.csv'
 
 # Загрузка данных
 if not DATA_PATH.exists():
