@@ -27,6 +27,7 @@ while True:
             st.bar_chart(data.groupby("District")['avg_area'].mean())
 
         time.sleep(30)
+        st.experimental_rerun()
     except FileNotFoundError:
         st.error("Файл с данными пока не создан.")
         time.sleep(5)
