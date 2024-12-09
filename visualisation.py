@@ -4,7 +4,7 @@ import time
 
 DATA_PATH = "D:/streaming-portugal/data/aggregated_data.csv"
 
-@st.cache_data
+#@st.cache_data
 def load_data(path):
     return pd.read_csv(path)
 
