@@ -11,7 +11,10 @@ DATA_PATH = BASE_DIR / 'data' / 'portugal_listings.csv'
 OUTPUT_PATH = BASE_DIR / 'data' / 'aggregated_results.csv'
 
 # Загрузка данных
-df = pd.read_csv(DATA_PATH, low_memory=False)
+if not DATA_PATH.exists():
+    print(f"Ошибка: файл {DATA_PATH} не найден.")
+else:
+    df = pd.read_csv(DATA_PATH, low_memory=False)
 
 # Преобразование колонок в числовой формат
 df['Price'] = pd.to_numeric(df['Price'], errors='coerce')
