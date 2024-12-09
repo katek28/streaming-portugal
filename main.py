@@ -24,7 +24,7 @@ df = df.dropna(subset=['Price', 'LivingArea'])
 def process_stream():
     aggregated_data = pd.DataFrame()
 
-    for batch in data_stream(df, chunk_size=10, delay=1):  # 10 записей в секунду
+    for chunk in data_stream(df, chunk_size=10, delay=1):  # 10 записей в секунду
         filtered_chunk = filter_data(chunk)
         aggregated_chunk = aggregate_data(filtered_chunk)
         aggregated_data = pd.concat([aggregated_data, aggregated_chunk])
